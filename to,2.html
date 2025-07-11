@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .game {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin: 10px 0;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .game h2 {
+            margin: 0 0 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        canvas {
+            border: 1px solid black;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Games Collection</h1>
+
+        <div class="game">
+            <h2>X and O (Tic Tac Toe)</h2>
+            <button onclick="startTicTacToe()">Play Now</button>
+            <canvas id="ticTacToeCanvas" width="300" height="300" style="display: none;"></canvas>
+        </div>
+
+        <div class="game">
+            <h2>Guess the Number</h2>
+            <button onclick="startGuessTheNumber()">Play Now</button>
+            <div id="guessTheNumber" style="display: none;">
+                <p>Guess a number between 1 and 100:</p>
+                <input type="number" id="guessInput" />
+                <button onclick="checkGuess()">Submit</button>
+                <p id="feedback"></p>
+            </div>
+        </div>
+
+        <div class="game">
+            <h2>Memory Match</h2>
+            <button onclick="startMemoryMatch()">Play Now</button>
+            <div id="memoryMatch" style="display: none;">
+                <p>Memory game coming soon!</p>
+            </div>
+        </div>
+
+        <div class="game">
+            <h2>Snake Game</h2>
+            <button onclick="startSnakeGame()">Play Now</button>
+            <canvas id="snakeCanvas" width="300" height="300" style="display: none;"></canvas>
+        </div>
+
+        <div class="game">
+            <h2>Pong</h2>
+            <button onclick="startPong()">Play Now</button>
+            <canvas id="pongCanvas" width="400" height="300" style="display: none;"></canvas>
+        </div>
+
+        <div class="game">
+            <h2>Word Scramble</h2>
+            <button onclick="startWordScramble()">Play Now</button>
+            <div id="wordScramble" style="display: none;">
+                <p>Unscramble the letters to form a word!</p>
+                <p id="scrambledWord"></p>
+                <input type="text" id="wordInput" />
+                <button onclick="checkWord()">Submit</button>
+                <p id="wordFeedback"></p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Tic Tac Toe Game
+        function startTicTacToe() {
+            const canvas = document.getElementById('ticTacToeCanvas');
+            canvas.style.display = 'block';
+            const ctx = canvas.getContext('2d');
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw grid
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(100, 0);
+            ctx.lineTo(100, 300);
+            ctx.moveTo(200, 0);
+            ctx.lineTo(200, 300);
+            ctx.moveTo(0, 100);
+            ctx.lineTo(300, 100);
+            ctx.moveTo(0, 200);
+            ctx.lineTo(300, 200);
+            ctx.stroke();
+
+            alert("Tic Tac Toe coming soon!");
+        }
+
+        // Guess the Number Game
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        function startGuessTheNumber() {
+            document.getElementById('guessTheNumber').style.display = 'block';
+        }
+
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById('guessInput').value);
+            const feedback = document.getElementById('feedback');
+            if (userGuess === randomNumber) {
+                feedback.textContent = 'Congratulations! You guessed the right number!';
+            } else if (userGuess < randomNumber) {
+                feedback.textContent = 'Too low! Try again.';
+            } else {
+                feedback.textContent = 'Too high! Try again.';
+            }
+        }
+
+        // Snake Game
+        function startSnakeGame() {
+            const canvas = document.getElementById('snakeCanvas');
+            canvas.style.display = 'block';
+            const ctx = canvas.getContext('2d');
+            ctx.fillText("Snake Game coming soon!", 50, 150);
+        }
+
+        // Pong Game
+        function startPong() {
+            const canvas = document.getElementById('pongCanvas');
+            canvas.style.display = 'block';
+            const ctx = canvas.getContext('2d');
+            ctx.fillText("Pong Game coming soon!", 100, 150);
+        }
+
+        // Word Scramble Game
+        const words = ["javascript", "python", "html", "css", "flutter"];
+        let selectedWord = "";
+        function startWordScramble() {
+            document.getElementById('wordScramble').style.display = 'block';
+            selectedWord = words[Math.floor(Math.random() * words.length)];
+            const scrambled = selectedWord.split('').sort(() => Math.random() - 0.5).join('');
+            document.getElementById('scrambledWord').textContent = scrambled;
+        }
+
+        function checkWord() {
+            const userWord = document.getElementById('wordInput').value;
+            const feedback = document.getElementById('wordFeedback');
+            if (userWord === selectedWord) {
+                feedback.textContent = 'Correct!';
+            } else {
+                feedback.textContent = 'Try again!';
+            }
+        }
+    </script>
+</body>
+</html>

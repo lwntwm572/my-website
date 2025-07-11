@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8" />
+  <title>משחק ניחוש מספר</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #e6f7ff;
+    }
+    input, button {
+      font-size: 18px;
+      padding: 10px;
+      margin: 10px;
+    }
+    #result {
+      font-size: 22px;
+      margin-top: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h2>נחש מספר בין 1 ל-10</h2>
+  <input type="number" id="guess" min="1" max="10" />
+  <button onclick="checkGuess()">בדוק</button>
+  <p id="result"></p>
+  <button onclick="window.location.href='gyg.html'">חזור לתפריט הראשי</button>
+
+  <script>
+    const secretNumber = Math.floor(Math.random() * 10) + 1;
+    function checkGuess() {
+      const guess = parseInt(document.getElementById('guess').value);
+      const result = document.getElementById('result');
+      if (!guess || guess < 1 || guess > 10) {
+        result.textContent = 'אנא הזן מספר תקין בין 1 ל-10.';
+        return;
+      }
+      if (guess === secretNumber) {
+        result.textContent = 'כל הכבוד! ניחשת נכון 🎉';
+      } else if (guess < secretNumber) {
+        result.textContent = 'המספר גבוה יותר. נסה שוב.';
+      } else {
+        result.textContent = 'המספר נמוך יותר. נסה שוב.';
+      }
+    }
+  </script>
+</body>
+</html>

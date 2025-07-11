@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8" />
+  <title>משחק איקס ועיגול</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      text-align: center;
+      margin-top: 40px;
+      background-color: #fff0f5;
+    }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    td {
+      width: 60px;
+      height: 60px;
+      border: 2px solid #333;
+      font-size: 48px;
+      cursor: pointer;
+      text-align: center;
+      vertical-align: middle;
+    }
+    #message {
+      font-size: 20px;
+      margin-top: 20px;
+      color: #333;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      background-color: #ff4081;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>משחק איקס ועיגול</h2>
+  <table id="board">
+    <tr>
+      <td data-cell="0"></td>
+      <td data-cell="1"></td>
+      <td data-cell="2"></td>
+    </tr>
+    <tr>
+      <td data-cell="3"></td>
+      <td data-cell="4"></td>
+      <td data-cell="5"></td>
+    </tr>
+    <tr>
+      <td data-cell="6"></td>
+      <td data-cell="7"></td>
+      <td data-cell="8"></td>
+    </tr>
+  </table>
+  <div id="message">תורך: איקס</div>
+  <button onclick="restartGame()">התחל מחדש</button>
+  <br>
+  <button onclick="window.location.href='index.html'">חזור לתפריט הראשי</button>
+
+  <script>
+    const board = Array(9).fill(null);
+    let currentPlayer = 'X';
+    const cells = document.querySelectorAll('td');
+    const message = document.getElementById('message');
+
+    function checkWin(player) {
+      const winPatterns = [
+        [0,1,2], [3,4,5], [6,7,8],
+        [0,3,6], [1,4,7], [2,5,8],
+        [0,4,8], [2,4,6]
+      ];
+      return winPatterns.some(pattern => 
+        pattern.every(index => board[index] === player)
+      );
+    }
+
+    function checkDraw() {
+      return board.every(cell => cell !== null);
+    }
+
+    function handleClick(e) {
+      const index = e.target.getAttribute('data-cell');
+      if (board[index] || checkWin('X') || checkWin('O')) return; // Cell taken or game ended
+      board[index] = currentPlayer;
+      e.target.textContent = currentPlayer;
+      if (checkWin(currentPlayer)) {
+        message.textContent = `הניצחון הוא ל${currentPlayer}! 🎉`;
+      } else if (checkDraw()) {
+        message.textContent = 'תיקו!';
+      } else {
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        message.textContent = `תורך: ${currentPlayer}`;
+      }
+    }
+
+    function restartGame() {
+      for(let i=0; i<board.length; i++) {
+        board[i] = null;
+        cells[i].textContent = '';
+      }
+      currentPlayer = 'X';
+      message.textContent = 'תורך: איקס';
+    }
+
+    cells.forEach(cell => cell.addEventListener('click', handleClick));
+  </script>
+</body>
+</html>
